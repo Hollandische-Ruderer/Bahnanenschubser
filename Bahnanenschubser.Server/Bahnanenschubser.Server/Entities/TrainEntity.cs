@@ -10,6 +10,6 @@ namespace Bahnanenschubser.Server {
 
         public string TrainId { get; set; }
 
-        public List<NotificationEntity> Notifications { get; set; } = new List<NotificationEntity>();
+        public List<Notification> Notifications { get; set; } = new List<Notification>();
     }
 }
