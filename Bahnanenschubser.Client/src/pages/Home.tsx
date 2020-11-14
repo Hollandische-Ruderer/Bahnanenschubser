@@ -1,6 +1,6 @@
 import {
     IonButton,
-    IonButtons,
+    IonButtons, IonCol,
     IonContent,
     IonGrid,
     IonHeader, IonInput, IonItem, IonItemDivider, IonLabel, IonList,
@@ -15,6 +15,8 @@ import './Home.css';
 import ExploreContainer from '../components/ExploreContainer';
 import IHomeViewModel from "../viewmodels/IHomeViewModel";
 import {observer} from "mobx-react";
+import Button from '@material-ui/core/Button';
+import { Grid, ButtonGroup, TextField, Divider, Typography } from '@material-ui/core';
 
 enum Tabs {
     Fahrt = "Fahrt",
@@ -53,61 +55,69 @@ export default class Home extends React.Component<Props, State> {
                 <IonContent fullscreen>
 
                     <ExploreContainer>
-                        <IonGrid>
-                            <IonRow>
-                                <IonSegment value={this.state.activeTab} onIonChange={(change) => {
-                                    this.setState({
-                                        activeTab: change.detail.value as Tabs
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <ButtonGroup color="primary" aria-label="outlined primary button group" fullWidth={true}>
+                                    <Button disabled={this.state.activeTab === Tabs.Fahrt} value={this.state.activeTab} onClick={() => {
+                                        this.setState({
+                                            activeTab: Tabs.Fahrt
                                     })
-                                }}>
-                                    <IonSegmentButton value={Tabs.Fahrt}>
-                                        <IonLabel>
-                                            Fahrt
-                                        </IonLabel>
-                                    </IonSegmentButton>
-                                    <IonSegmentButton value={Tabs.Haltestelle}>
-                                        <IonLabel>
-                                            Haltestelle
-                                        </IonLabel>
-                                    </IonSegmentButton>
-                                </IonSegment>
-                            </IonRow>
-                            {this.state.activeTab === Tabs.Fahrt &&
-                            <IonRow>
-                                <IonList>
-                                    <IonItem>
-                                        <IonLabel position='floating'>Von</IonLabel>
-                                        <IonInput autofocus={true} value={this.props.viewmodel.origin}
-                                                  onIonChange={(v) => this.props.viewmodel.setOrigin(v.detail.value!)}/>
-                                    </IonItem>
-                                    <IonItem>
-                                        <IonLabel position='floating'>Bis</IonLabel>
-                                        <IonInput value={this.props.viewmodel.destination}
-                                                  onIonChange={(v) => this.props.viewmodel.setDestination(v.detail.value!)}/>
-                                    </IonItem>
-                                    <IonItemDivider>oder</IonItemDivider>
-                                    <IonItem>
-                                        <IonLabel position='floating'>Zugnummer</IonLabel>
-                                        <IonInput value={this.props.viewmodel.trainNumber}
-                                                  onIonChange={(v) => this.props.viewmodel.setTrainNumber(v.detail.value!)}/>
-                                    </IonItem>
-                                </IonList>
-                                <IonLabel>Test{this.props.viewmodel.origin} </IonLabel>
-                            </IonRow>
-                            }
+                                    }}>Fahrt</Button>
+                                    <Button disabled={this.state.activeTab === Tabs.Haltestelle} value={this.state.activeTab} onClick={() => {
+                                        this.setState({
+                                            activeTab: Tabs.Haltestelle
+                                        })
+                                    }}>Haltestelle</Button>
+                                </ButtonGroup>
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                {this.state.activeTab === Tabs.Fahrt &&
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12}>
+                                            <TextField value={this.props.viewmodel.origin} onChange={(e) => this.props.viewmodel.setOrigin(e.target.value)} id="filled-basic" label="Von" variant="filled" fullWidth={true} />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField value={this.props.viewmodel.destination} onChange={(e) => this.props.viewmodel.setDestination(e.target.value)} id="filled-basic" label="Bis" variant="filled" fullWidth={true}/>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Divider component='div' />
+                                            <div>
+                                                <Typography
+                                                    color="textSecondary"
+                                                    display="block"
+                                                    variant="caption"
+                                                >
+                                                    oder
+                                                </Typography>
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <form noValidate autoComplete="off">
+                                                <TextField value={this.props.viewmodel.trainNumber} onChange={(e) => this.props.viewmodel.setTrainNumber(e.target.value)} id="filled-basic" label="Zugnummer" variant="filled" fullWidth={true} />
+                                            </form>
+                                        </Grid>
+                                    </Grid>
+                                }
+                            </Grid>
+
                             {this.state.activeTab === Tabs.Haltestelle &&
-                            <IonRow>
-                                <IonList>
-                                    <IonItem>
-                                        <IonLabel position='floating'>Haltestelle</IonLabel>
-                                        <IonInput value={this.props.viewmodel.station}
-                                                  onIonChange={(v) => this.props.viewmodel.setStation(v.detail.value!)}/>
-                                    </IonItem>
-                                </IonList>
-                            </IonRow>
+                            <Grid container spacing={3}>
+                                <Grid item xs={12}>
+                                    <form noValidate autoComplete="off">
+                                        <TextField value={this.props.viewmodel.station} onChange={(e) => this.props.viewmodel.setStation(e.target.value)} id="filled-basic" label="Zugnummer" variant="filled" fullWidth={true} />
+                                    </form>
+                                </Grid>
+                            </Grid>
                             }
-                            <IonButton onClick={() => this.props.viewmodel.search()}>Suchen</IonButton>
-                        </IonGrid>
+
+                            <Grid item xs={12}>
+                                <Button fullWidth={true} onClick={() => this.props.viewmodel.search()} variant="contained" color="primary">
+                                    Suchen
+                                </Button>
+                            </Grid>
+
+                        </Grid>
                     </ExploreContainer>
                 </IonContent>
             </IonPage>
