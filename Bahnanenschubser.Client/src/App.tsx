@@ -29,19 +29,15 @@ import Splash from "./pages/Splash";
 import Fahrten from "./pages/FahrtenPage/Fahrten";
 import FahrtenViewModel from "./viewmodels/FahrtenViewModel";
 import MockedFahrtenProvider from "./provider/MockedFahrtenProvider";
-<<<<<<< .mine
 import FeedPage from "./pages/FeedPage/FeedPage";
 import FeedViewModel from "./viewmodels/FeedViewModel";
-=======
 import IFahrtenViewModel from "./viewmodels/IFahrtenViewModel";
-
->>>>>>> .theirs
 
 const HomeComponent: React.FC = () => {
   const history = useHistory();
   const fwd = (to: string) => {
     history.push(to);
-  }
+  };
   return <Home viewmodel={new HomeViewModel()} forward={fwd} />
 };
 
@@ -53,10 +49,11 @@ const FahrtenComponent: React.FC = () => {
   const history = useHistory();
   const fwd = (to: string) => {
     history.push(to);
-  }
+  };
 
   return <Fahrten viewModel={fahrtenViewModel} originLocation={originLocation} destinationLocation={destinationLocation} forward={fwd} />
 };
+
 
 const App: React.FC = () => {
   return (
@@ -68,8 +65,8 @@ const App: React.FC = () => {
             <Route path="/page/:name" component={Page} exact />
             <Route path="/home" component={HomeComponent} exact />
             <Route path="/splash" component={Splash} exact />
-            <Route path="/fahrten/:originLocation/:destinationLocation" component={FahrtenComponent} exact />
             <Route path="/feed" component={() => <FeedPage viewModel={new FeedViewModel()} />} exact />
+            <Route path="/fahrten/:originLocation/:destinationLocation" component={FahrtenComponent} exact />
             <Redirect from="/" to="/splash" exact />
           </IonRouterOutlet>
         </IonSplitPane>
