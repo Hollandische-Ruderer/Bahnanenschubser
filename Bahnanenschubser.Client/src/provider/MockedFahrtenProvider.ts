@@ -4,12 +4,13 @@ import faker from 'faker';
 
 function mockFahrt(originLocation: string, destinationLocation: string): Fahrt {
     console.log("shihklsd mock", originLocation, destinationLocation);
+    const names: string[] = ['RE', 'ICE', 'RB', 'IC'];
     return {
         id: faker.random.uuid(),
-        trainNumber: (1000000000000 - faker.random.number(100000000000)).toString(10),
+        trainNumber: names[faker.random.number(3)] + faker.random.number(999).toString(),
         delay: faker.random.number(24),
-        originTime: faker.time.recent().toString(),
-        destinationTime: faker.time.recent().toString(),
+        originTime: faker.time.recent('unix').toString(),
+        destinationTime: faker.time.recent('unix').toString(),
         originLocation,
         destinationLocation
     } as Fahrt

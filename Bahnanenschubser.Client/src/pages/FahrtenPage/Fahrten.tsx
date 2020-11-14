@@ -9,6 +9,7 @@ import {Redirect} from "react-router";
 import IFahrtenViewModel from "../../viewmodels/IFahrtenViewModel";
 import SingleFahrt from "./SingleFahrt";
 import {Divider, Grid} from '@material-ui/core';
+import {observer} from "mobx-react";
 
 type Props = {
     viewModel: IFahrtenViewModel;
@@ -18,6 +19,7 @@ type State = {
     continue: boolean;
 }
 
+@observer
 export default class Fahren extends React.Component<Props, State> {
 
     constructor(props: Props) {
@@ -55,22 +57,11 @@ export default class Fahren extends React.Component<Props, State> {
                             <Grid item xs={12}>
                                 Fahrt/Zug/Bus auswählen
                             </Grid>
-                            <Grid item xs={12}>
-                                {this.props.viewModel.fahrten.map((fahrt) =>
+                            {this.props.viewModel.fahrten.map((fahrt) =>
+                                <Grid item xs={12} key={fahrt.id}>
                                     <SingleFahrt fahrt={fahrt} />
-                                )}
-                                <SingleFahrt fahrt={
-                                    {
-                                        trainNumber: 'RE418',
-                                        originTime: '14:20',
-                                        originLocation: 'Mainz',
-                                        destinationTime: '16:20',
-                                        destinationLocation: 'Stuttgart',
-                                        delay: 5,
-                                        id: '123'
-                                    }
-                                }/>
-                            </Grid>
+                                </Grid>
+                            )}
                         </Grid>
                     </div>
                 </IonContent>

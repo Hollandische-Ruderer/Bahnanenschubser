@@ -14,7 +14,7 @@ export default class SingleFahrt extends React.Component<Props> {
             <Paper elevation={3} style={{padding: '10px'}}>
                 <Grid container={true} spacing={2}>
                     <Grid item xs={3}>
-                        {this.props.fahrt.originTime}
+                        {new Date(Number(this.props.fahrt.originTime)).toLocaleTimeString()}
                     </Grid>
                     <Grid item xs={5}>
                         {this.props.fahrt.originLocation}
@@ -23,7 +23,7 @@ export default class SingleFahrt extends React.Component<Props> {
                         {this.props.fahrt.trainNumber} >>
                     </Grid>
                     <Grid item xs={3}>
-                        {this.props.fahrt.destinationTime}
+                        {new Date(Number(this.props.fahrt.destinationTime)).toLocaleTimeString()}
                     </Grid>
                     <Grid item xs={5}>
                         {this.props.fahrt.destinationLocation}
