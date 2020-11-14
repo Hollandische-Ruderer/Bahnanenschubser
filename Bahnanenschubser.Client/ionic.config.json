@@ -1,0 +1,7 @@
+{
+  "name": "Bahnanenschubser",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
