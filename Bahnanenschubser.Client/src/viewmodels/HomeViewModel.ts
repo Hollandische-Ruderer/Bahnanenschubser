@@ -48,8 +48,7 @@ export default class HomeViewModel implements IHomeViewModel {
         return this._station;
     }
 
-    public search(): void {
-        console.log('search button not implemented! Should trigger search query');
+    public search(originLocation: string, destinationLocation: string): void {
         this._clearInputs();
     }
 

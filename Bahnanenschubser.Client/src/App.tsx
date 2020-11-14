@@ -3,7 +3,7 @@ import Page from './pages/Page';
 import React from 'react';
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route } from 'react-router-dom';
+import {Redirect, Route, useHistory, useParams} from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -29,14 +29,30 @@ import Splash from "./pages/Splash";
 import Fahrten from "./pages/FahrtenPage/Fahrten";
 import FahrtenViewModel from "./viewmodels/FahrtenViewModel";
 import MockedFahrtenProvider from "./provider/MockedFahrtenProvider";
+import IFahrtenViewModel from "./viewmodels/IFahrtenViewModel";
 
 const HomeComponent: React.FC = () => {
-  return <Home viewmodel={new HomeViewModel()} />
+  const history = useHistory();
+  const fwd = (to: string) => {
+    history.push(to);
+  }
+  return <Home viewmodel={new HomeViewModel()} forward={fwd} />
 };
 
+const fahrtenViewModel = new FahrtenViewModel(new MockedFahrtenProvider());
+
+const FahrtenComponent: React.FC = () => {
+  // I know it's ugly, but it's a hackathon ...
+  const { originLocation, destinationLocation } = useParams();
+  const history = useHistory();
+  const fwd = (to: string) => {
+    history.push(to);
+  }
+
+  return <Fahrten viewModel={fahrtenViewModel} originLocation={originLocation} destinationLocation={destinationLocation} forward={fwd} />
+};
 
 const App: React.FC = () => {
-
   return (
     <IonApp>
       <IonReactRouter>
@@ -46,7 +62,7 @@ const App: React.FC = () => {
             <Route path="/page/:name" component={Page} exact />
             <Route path="/home" component={HomeComponent} exact />
             <Route path="/splash" component={Splash} exact />
-            <Route path="/fahrten" component={() => <Fahrten viewModel={new FahrtenViewModel(new MockedFahrtenProvider())} />} exact />
+            <Route path="/fahrten/:originLocation/:destinationLocation" component={FahrtenComponent} exact />
             <Redirect from="/" to="/splash" exact />
           </IonRouterOutlet>
         </IonSplitPane>

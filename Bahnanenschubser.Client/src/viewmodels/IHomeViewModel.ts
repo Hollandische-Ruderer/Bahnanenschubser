@@ -7,5 +7,5 @@ export default interface IHomeViewModel {
     setDestination(destination: string): void;
     setTrainNumber(number: string): void;
     setStation(station: string): void;
-    search(): void;
+    search(originLocation: string, destinationLocation: string): void;
 }

@@ -13,7 +13,6 @@ import IHomeViewModel from "../viewmodels/IHomeViewModel";
 import {observer} from "mobx-react";
 import Button from '@material-ui/core/Button';
 import { Grid, ButtonGroup, TextField, Divider, Typography } from '@material-ui/core';
-import {Redirect} from "react-router";
 
 enum Tabs {
     Fahrt = "Fahrt",
@@ -21,7 +20,8 @@ enum Tabs {
 }
 
 type Props = {
-    viewmodel: IHomeViewModel
+    viewmodel: IHomeViewModel,
+    forward: (to: string) => void
 };
 
 type State = {
@@ -41,8 +41,7 @@ export default class Home extends React.Component<Props, State> {
     }
 
     render(): React.ReactElement {
-        if(this.state.continue)
-            return <Redirect to={'/Fahrten'} />
+
         return (
             <IonPage>
                 <IonHeader>
@@ -115,8 +114,7 @@ export default class Home extends React.Component<Props, State> {
 
                             <Grid item xs={12}>
                                 <Button fullWidth={true} onClick={() => {
-                                    this.props.viewmodel.search();
-                                    this.setState({continue: true});
+                                    this.props.forward(`/fahrten/${this.props.viewmodel.origin}/${this.props.viewmodel.destination}`);
                                 }} variant="contained" color="primary">
                                     Suchen
                                 </Button>

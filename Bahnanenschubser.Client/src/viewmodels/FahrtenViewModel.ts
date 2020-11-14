@@ -1,4 +1,4 @@
-import {observable} from 'mobx';
+import {action, computed, observable} from 'mobx';
 import IFahrtenViewModel from "./IFahrtenViewModel";
 import Fahrt from "../models/Fahrt";
 import IFahrtenProvider from "../provider/IFahrtenProvider";
@@ -10,13 +10,15 @@ export default class FahrtenViewModel implements IFahrtenViewModel {
     constructor(fahrtenProvider: IFahrtenProvider) {
         this._fahrten = [];
         this._fahrtenProvider = fahrtenProvider;
-        this._fahrtenProvider.search('Mainz', 'Stuttgart').then(r => {
-            this._fahrten = r
-        })
     }
 
     public get fahrten(): Fahrt[] {
         return this._fahrten;
     };
+
+    @action
+    async search(originLocation: string, destinationLocation: string): Promise<void> {
+        this._fahrten = await this._fahrtenProvider.search(originLocation, destinationLocation);
+    }
 
 }
