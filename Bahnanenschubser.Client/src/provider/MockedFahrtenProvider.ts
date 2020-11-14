@@ -18,7 +18,7 @@ function mockFahrt(originLocation: string, destinationLocation: string): Fahrt {
 export default class MockedFahrtenProvider implements IFahrtenProvider {
     async search(originLocation: string, destinationLocation: string): Promise<Fahrt[]> {
         await (new Promise(resolve => {setTimeout(resolve, 1234)}));
-        const count = faker.random.number(12);
+        const count = faker.random.number(12) + 2;
         const values = [];
         for(let i = 0; i < count; i++)
             values.push(mockFahrt(originLocation, destinationLocation));
