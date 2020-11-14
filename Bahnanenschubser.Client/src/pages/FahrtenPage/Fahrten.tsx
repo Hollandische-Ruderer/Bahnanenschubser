@@ -9,7 +9,6 @@ import IFahrtenViewModel from "../../viewmodels/IFahrtenViewModel";
 import SingleFahrt from "./SingleFahrt";
 import {Divider, Grid} from '@material-ui/core';
 import {observer} from "mobx-react";
-import {reaction} from "mobx";
 
 type Props = {
     viewModel: IFahrtenViewModel;
@@ -34,18 +33,20 @@ export default class Fahrten extends React.Component<Props, State> {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.setState({loading: true});
         try {
-            this.props.viewModel.search(this.props.originLocation, this.props.destinationLocation);
+            await this.props.viewModel.search(this.props.originLocation, this.props.destinationLocation);
         } catch (ex) {
             // TODO: Modal for errors.
             console.error('Exception while loading', ex);
         } finally {
             this.setState({loading: false});
         }
+    }
 
-        reaction(() => this.props.viewModel.fahrten, (ftn) => console.log('ftn', ftn));
+    componentWillUnmount() {
+        this.props.viewModel.clear();
     }
 
     render(): React.ReactElement {

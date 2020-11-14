@@ -21,4 +21,8 @@ export default class FahrtenViewModel implements IFahrtenViewModel {
         this._fahrten = await this._fahrtenProvider.search(originLocation, destinationLocation);
     }
 
+    @action
+    clear(): void {
+        this._fahrten = [];
+    }
 }
