@@ -1,0 +1,7 @@
+﻿################################################################################
+# Diese .gitignore-Datei wurde von Microsoft(R) Visual Studio automatisch erstellt.
+################################################################################
+
+/Bahnanenschubser.Server/Bahnanenschubser.Server/obj
+/Bahnanenschubser.Server/.vs/Bahnanenschubser.Server
+/Bahnanenschubser.Server/Bahnanenschubser.Server/appsettings.Development.json
