@@ -5,3 +5,6 @@
 /Bahnanenschubser.Server/Bahnanenschubser.Server/obj
 /Bahnanenschubser.Server/.vs/Bahnanenschubser.Server
 /Bahnanenschubser.Server/Bahnanenschubser.Server/appsettings.Development.json
+/Bahnanenschubser.Server/Bahnanenschubser.Server/bin/Debug/netcoreapp3.1
+/Bahnanenschubser.Server/InnoApi.json
+/Bahnanenschubser.Server/Bahnanenschubser.Server/Bahnanenschubser.Server.csproj.user
