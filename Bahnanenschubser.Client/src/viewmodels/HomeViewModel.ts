@@ -16,7 +16,6 @@ export default class HomeViewModel implements IHomeViewModel {
 
     @action
     public setDestination(destination: string): void {
-        console.log(destination);
         this._destination = destination;
     }
 
