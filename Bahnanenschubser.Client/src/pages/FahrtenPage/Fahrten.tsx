@@ -5,33 +5,50 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import './Fahrten.css';
-import {Redirect} from "react-router";
 import IFahrtenViewModel from "../../viewmodels/IFahrtenViewModel";
 import SingleFahrt from "./SingleFahrt";
 import {Divider, Grid} from '@material-ui/core';
 import {observer} from "mobx-react";
+import {reaction} from "mobx";
 
 type Props = {
     viewModel: IFahrtenViewModel;
+    originLocation: string;
+    destinationLocation: string;
+    forward: (to: string) => void;
 }
 
 type State = {
     continue: boolean;
+    loading: boolean;
 }
 
 @observer
-export default class Fahren extends React.Component<Props, State> {
+export default class Fahrten extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
         this.state = {
-            continue: false
+            continue: false,
+            loading: false
         }
     }
 
+    componentDidMount() {
+        this.setState({loading: true});
+        try {
+            this.props.viewModel.search(this.props.originLocation, this.props.destinationLocation);
+        } catch (ex) {
+            // TODO: Modal for errors.
+            console.error('Exception while loading', ex);
+        } finally {
+            this.setState({loading: false});
+        }
+
+        reaction(() => this.props.viewModel.fahrten, (ftn) => console.log('ftn', ftn));
+    }
+
     render(): React.ReactElement {
-        if(this.state.continue)
-            return <Redirect to={'/Home'} />
         return (
             <IonPage>
                 <IonHeader>
@@ -46,10 +63,10 @@ export default class Fahren extends React.Component<Props, State> {
                     <div style={{padding: '10px'}}>
                         <Grid container={true} spacing={3}>
                             <Grid item xs={12}>
-                                von <b>Mainz</b>
+                                von <b>{this.props.originLocation}</b>
                             </Grid>
                             <Grid item xs={12}>
-                                von <b>Stuttgart</b>
+                                von <b>{this.props.destinationLocation}</b>
                             </Grid>
                             <Grid item xs={12}>
                                 <Divider variant='middle'/>
