@@ -3,7 +3,6 @@ import Fahrt from "../models/Fahrt";
 import faker from 'faker';
 
 function mockFahrt(originLocation: string, destinationLocation: string): Fahrt {
-    console.log("shihklsd mock", originLocation, destinationLocation);
     const names: string[] = ['RE', 'ICE', 'RB', 'IC'];
     return {
         id: faker.random.uuid(),
@@ -15,9 +14,6 @@ function mockFahrt(originLocation: string, destinationLocation: string): Fahrt {
         destinationLocation
     } as Fahrt
 }
-
-// @ts-ignore
-window.fn = mockFahrt;
 
 export default class MockedFahrtenProvider implements IFahrtenProvider {
     async search(originLocation: string, destinationLocation: string): Promise<Fahrt[]> {
