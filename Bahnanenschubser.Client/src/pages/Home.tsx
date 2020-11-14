@@ -1,12 +1,8 @@
 import {
-    IonButton,
-    IonButtons, IonCol,
-    IonContent,
-    IonGrid,
-    IonHeader, IonInput, IonItem, IonItemDivider, IonLabel, IonList,
+    IonButtons, IonContent,
+    IonHeader,
     IonMenuButton,
     IonPage,
-    IonRow, IonSegment, IonSegmentButton,
     IonTitle,
     IonToolbar
 } from '@ionic/react';
@@ -40,6 +36,7 @@ export default class Home extends React.Component<Props, State> {
             activeTab: Tabs.Fahrt
         }
     }
+
     render(): React.ReactElement {
         return (
             <IonPage>
