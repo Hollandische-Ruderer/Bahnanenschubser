@@ -26,6 +26,8 @@ import './theme/variables.css';
 import Home from "./pages/Home";
 import HomeViewModel from "./viewmodels/HomeViewModel";
 import Splash from "./pages/Splash";
+import Fahrten from "./pages/FahrtenPage/Fahrten";
+import FahrtenViewModel from "./viewmodels/FahrtenViewModel";
 
 const HomeComponent: React.FC = () => {
   return <Home viewmodel={new HomeViewModel()} />
@@ -43,6 +45,7 @@ const App: React.FC = () => {
             <Route path="/page/:name" component={Page} exact />
             <Route path="/home" component={HomeComponent} exact />
             <Route path="/splash" component={Splash} exact />
+            <Route path="/fahrten" component={() => <Fahrten viewModel={new FahrtenViewModel()} />} exact />
             <Redirect from="/" to="/splash" exact />
           </IonRouterOutlet>
         </IonSplitPane>
