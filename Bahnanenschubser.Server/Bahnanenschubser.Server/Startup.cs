@@ -80,10 +80,14 @@ namespace Bahnanenschubser.Server {
             InitializeDatabase( app.ApplicationServices.GetRequiredService<IOptions<MongoDBOptions>>().Value );
         }
 
-        private void InitializeDatabase( MongoDBOptions options ) {
-            DB.InitAsync( options.Database, options.Address, options.Port );
-            DB.Index<UserEntity>()
+        private async void InitializeDatabase( MongoDBOptions options ) {
+            await DB.InitAsync( options.Database, options.Address, options.Port );
+            await DB.Index<UserEntity>()
                 .Key( e => e.Position, KeyType.Geo2D )
+                .CreateAsync();
+
+            await DB.Index<TrainEntity>()
+                .Key( e => e.TrainId, KeyType.Hashed )
                 .CreateAsync();
         }
     }
