@@ -25,6 +25,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Home from "./pages/Home";
 import HomeViewModel from "./viewmodels/HomeViewModel";
+import Splash from "./pages/Splash";
 
 const HomeComponent: React.FC = () => {
   return <Home viewmodel={new HomeViewModel()} />
@@ -41,7 +42,8 @@ const App: React.FC = () => {
           <IonRouterOutlet id="main">
             <Route path="/page/:name" component={Page} exact />
             <Route path="/home" component={HomeComponent} exact />
-            <Redirect from="/" to="/home" exact />
+            <Route path="/splash" component={Splash} exact />
+            <Redirect from="/" to="/splash" exact />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
