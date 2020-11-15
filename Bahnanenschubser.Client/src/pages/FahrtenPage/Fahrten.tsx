@@ -76,7 +76,7 @@ export default class Fahrten extends React.Component<Props, State> {
                                 Fahrt/Zug/Bus auswählen
                             </Grid>
                             {this.props.viewModel.fahrten.map((fahrt) =>
-                                <Grid item xs={12} key={fahrt.id}>
+                                <Grid item xs={12} key={fahrt.id} onClick={() => this.props.forward(`/feed/${fahrt.trainNumber}`)}>
                                     <SingleFahrt fahrt={fahrt} />
                                 </Grid>
                             )}

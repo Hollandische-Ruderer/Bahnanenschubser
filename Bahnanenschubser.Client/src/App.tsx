@@ -31,8 +31,13 @@ import FahrtenViewModel from "./viewmodels/FahrtenViewModel";
 import MockedFahrtenProvider from "./provider/MockedFahrtenProvider";
 import FeedPage from "./pages/FeedPage/FeedPage";
 import FeedViewModel from "./viewmodels/FeedViewModel";
-import IFahrtenViewModel from "./viewmodels/IFahrtenViewModel";
+import MockedFeedProvider from "./provider/MockedFeedProvider";
 
+const fahrtenViewModel = new FahrtenViewModel(new MockedFahrtenProvider());
+const feedViewModel = new FeedViewModel(new MockedFeedProvider());
+
+// I know it's ugly, but it's a hackathon ...
+// TODO: Use HOC-wrapping components ...
 const HomeComponent: React.FC = () => {
   const history = useHistory();
   const fwd = (to: string) => {
@@ -41,10 +46,7 @@ const HomeComponent: React.FC = () => {
   return <Home viewmodel={new HomeViewModel()} forward={fwd} />
 };
 
-const fahrtenViewModel = new FahrtenViewModel(new MockedFahrtenProvider());
-
 const FahrtenComponent: React.FC = () => {
-  // I know it's ugly, but it's a hackathon ...
   const { originLocation, destinationLocation } = useParams();
   const history = useHistory();
   const fwd = (to: string) => {
@@ -54,6 +56,10 @@ const FahrtenComponent: React.FC = () => {
   return <Fahrten viewModel={fahrtenViewModel} originLocation={originLocation} destinationLocation={destinationLocation} forward={fwd} />
 };
 
+const FeedPageComponent: React.FC = () => {
+  const { trainNumber } = useParams();
+  return <FeedPage viewModel={feedViewModel} trainNumber={trainNumber} />
+};
 
 const App: React.FC = () => {
   return (
@@ -66,7 +72,7 @@ const App: React.FC = () => {
             <Route path="/page/:name" component={Page} exact />
             <Route path="/home" component={HomeComponent} exact />
             <Route path="/splash" component={Splash} exact />
-            <Route path="/feed" component={() => <FeedPage viewModel={new FeedViewModel()} />} exact />
+            <Route path="/feed/:trainNumber" component={FeedPageComponent} exact />
             <Route path="/fahrten/:originLocation/:destinationLocation" component={FahrtenComponent} exact />
             <Redirect from="/" to="/splash" exact />
             </Switch>

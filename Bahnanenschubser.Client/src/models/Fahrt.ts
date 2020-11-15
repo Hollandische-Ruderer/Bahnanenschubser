@@ -1,9 +1,9 @@
 export default interface Fahrt {
     id: string;
     originLocation: string;
-    originTime: string;
+    originTime: Date;
     destinationLocation: string;
-    destinationTime: string;
+    destinationTime: Date;
     trainNumber: string;
     delay: number;
 }

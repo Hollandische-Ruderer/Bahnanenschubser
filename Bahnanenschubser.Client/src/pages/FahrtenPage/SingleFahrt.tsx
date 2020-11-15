@@ -2,6 +2,7 @@ import React from 'react';
 import './Fahrten.css';
 import Fahrt from "../../models/Fahrt";
 import {Grid, Paper} from "@material-ui/core";
+import moment from "moment";
 
 type Props = {
     fahrt: Fahrt;
@@ -14,7 +15,7 @@ export default class SingleFahrt extends React.Component<Props> {
             <Paper elevation={3} style={{padding: '10px'}}>
                 <Grid container={true} spacing={2}>
                     <Grid item xs={3}>
-                        {new Date(Number(this.props.fahrt.originTime)).toLocaleTimeString()}
+                        {moment(this.props.fahrt.originTime).format('HH:mm')}
                     </Grid>
                     <Grid item xs={5}>
                         {this.props.fahrt.originLocation}
@@ -23,7 +24,7 @@ export default class SingleFahrt extends React.Component<Props> {
                         {this.props.fahrt.trainNumber} >>
                     </Grid>
                     <Grid item xs={3}>
-                        {new Date(Number(this.props.fahrt.destinationTime)).toLocaleTimeString()}
+                        {moment(this.props.fahrt.destinationTime).format('HH:mm')}
                     </Grid>
                     <Grid item xs={5}>
                         {this.props.fahrt.destinationLocation}

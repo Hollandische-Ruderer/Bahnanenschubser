@@ -8,14 +8,17 @@ import {Grid, Tabs, Tab, Box, Typography} from '@material-ui/core';
 import {observer} from "mobx-react";
 import IFeedViewModel from "../../viewmodels/IFeedViewModel";
 import FeedContent from "./FeedContent";
+import Feed from "../../models/Feed";
 
 type Props = {
     viewModel: IFeedViewModel;
+    trainNumber: string;
 }
 
 type State = {
     continue: boolean;
     activeTab: TabViews;
+    loading: boolean;
 }
 
 enum TabViews {
@@ -36,7 +39,7 @@ function TabPanel(props: any) {
         >
             {value === index && (
                 <Box p={3}>
-                    <Typography>{children}</Typography>
+                    {children}
                 </Box>
             )}
         </div>
@@ -50,8 +53,24 @@ export default class FeedPage extends React.Component<Props, State> {
         super(props);
         this.state = {
             continue: false,
-            activeTab: TabViews.MELDUNGEN
+            activeTab: TabViews.MELDUNGEN,
+            loading: false
         }
+    }
+
+    async componentDidMount() {
+        try {
+            this.setState({loading: true});
+            await this.props.viewModel.query(this.props.trainNumber);
+        } catch (ex) {
+            // TODO: Log Exception
+        } finally {
+            this.setState({loading: false});
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.viewModel.clear();
     }
 
     render(): React.ReactElement {
@@ -62,7 +81,7 @@ export default class FeedPage extends React.Component<Props, State> {
                         <IonButtons slot="start">
                             <IonMenuButton />
                         </IonButtons>
-                        <IonTitle>Zug XY</IonTitle>
+                        <IonTitle>{this.props.trainNumber}</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonContent fullscreen>
@@ -79,7 +98,9 @@ export default class FeedPage extends React.Component<Props, State> {
                             </Grid>
                             <Grid item xs={12} style={{padding: '10px'}}>
                                 <TabPanel value={this.state.activeTab} index={TabViews.MELDUNGEN}>
-                                    Meldungen
+                                    {this.props.viewModel.feeds.map((feed: Feed) =>
+                                        <FeedContent feed={feed} key={feed.id} />
+                                    )}
                                 </TabPanel>
                                 <TabPanel value={this.state.activeTab} index={TabViews.FRAGEN}>
                                     Fragen
