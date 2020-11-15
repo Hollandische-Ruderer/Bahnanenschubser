@@ -1,5 +1,4 @@
 import {
-    IonButton,
     IonContent, IonImg, IonLabel,
     IonPage,
     IonGrid, IonRow, IonCol,
@@ -9,7 +8,7 @@ import './Splash.css';
 import image from './../assets/bahn-icon.png';
 import ExploreContainer from '../components/ExploreContainer';
 import {Redirect} from "react-router";
-import { Button } from '@material-ui/core';
+import {Button} from '@material-ui/core';
 
 type Props = { }
 
@@ -38,7 +37,7 @@ export default class Splash extends React.Component<Props, State> {
                             <IonRow>
                                 <IonCol>
                                     <IonLabel>
-                                        REISESTALK
+                                        REISETALK
                                     </IonLabel>
                                 </IonCol>
                             </IonRow>
